@@ -1,5 +1,7 @@
-README                        {#mainpage}
+OKVIS_depth_mesh
 ======
+This project combine Ovkis and [Flame](https://github.com/pangfumin/flame_ros) together.
+![image](https://github.com/pangfumin/okvis_depth_mesh/blob/master/snap.png)
 
 Welcome to OKVIS: Open Keyframe-based Visual-Inertial SLAM. 
 
