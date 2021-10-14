@@ -10,9 +10,9 @@ set(OKVIS_VERSION
 
 # options for build configuration
 option (USE_SYSTEM_BRISK
-        "Use brisk via find_package rather than downloading it as part of okvis" OFF) 
+        "Use brisk via find_package rather than downloading it as part of okvis" ON) 
 option (USE_SYSTEM_CERES
-        "Use ceres via find_package rather than downloading it as part of okvis" OFF) 
+        "Use ceres via find_package rather than downloading it as part of okvis" ON) 
 option (BUILD_APPS
         "Builds a demo app (which requires boost)" ON) 
 option (BUILD_TESTS
@@ -213,8 +213,9 @@ set(CMAKE_CXX_FLAGS_WSUPPRESS
       "${CMAKE_CXX_FLAGS} -Wno-unused-parameter -Wno-maybe-uninitialized -Wno-sign-compare -Wno-unused-but-set-variable -Wno-unused-variable -Wno-pedantic")
 message(STATUS "NOTE: Suppressing some warnings when compiling OpenGV.")
 ExternalProject_Add(opengv_external
-    GIT_REPOSITORY https://github.com/laurentkneip/opengv
-    GIT_TAG cc32b16281aa6eab67cb28a61cf87a2a5c2b0961
+    # GIT_REPOSITORY https://github.com/laurentkneip/opengv
+    # GIT_TAG cc32b16281aa6eab67cb28a61cf87a2a5c2b0961
+    URL file://${CMAKE_SOURCE_DIR}/opengv.zip
     UPDATE_COMMAND ""
     PATCH_COMMAND # forcing static libs
         COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/cmake/opengv/CMakeLists.txt ${CMAKE_CURRENT_BINARY_DIR}/opengv/src/opengv/CMakeLists.txt
