@@ -324,9 +324,7 @@ int main(int argc, char **argv)
         start = t;
       }
 
-//      cv::imshow("image", filtered);
-//
-//      cv::waitKey(1);
+
 
       // get all IMU measurements till then
       okvis::Time t_imu = start;
@@ -335,12 +333,6 @@ int main(int argc, char **argv)
 
 
       do {
-//        if (!std::getline(imu_file, line)) {
-//          std::cout << std::endl << "Finished. Press any key to exit." << std::endl << std::flush;
-//          cv::waitKey();
-//          return 0;
-//        }
-
           int length = fscanf(fp,"%ld,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf,%lf\n",
                               &stamp,&q_x,&q_y,&q_z,&q_w,&x,&y,&z,&g_x,&g_y,&g_z,&a_x,&a_y,&a_z,&m_x,&m_y,&m_z);
 
@@ -348,32 +340,14 @@ int main(int argc, char **argv)
             fclose(fp);
             return 0;
           }
-
-//        std::stringstream stream(line);
-//        std::string s;
-//        std::getline(stream, s, ',');
-//        std::string nanoseconds = stamp.substr(s.size() - 9, 9);
-//        std::string seconds = stamp.substr(0, .size() - 9);
-
         Eigen::Vector3d gyr(g_x,g_y,g_z);
-//        for (int j = 0; j < 3; ++j) {
-//          std::getline(stream, s, ',');
-//          gyr[j] = std::stof(s);
-//        }
-//
         Eigen::Vector3d acc(a_x,a_y,a_z);
-//        for (int j = 0; j < 3; ++j) {
-//          std::getline(stream, s, ',');
-//          acc[j] = std::stof(s);
-//        }
-
         t_imu = okvis::Time();
         t_imu.fromNSec(stamp);
 
         // add the IMU measurement for (blocking) processing
         if (t_imu - start + okvis::Duration(1.0) > deltaT) {
           okvis_estimator.addImuMeasurement(t_imu, acc, gyr);
-//            std::cout << "imu: " << t_imu << std::endl;
         }
 
       } while (t_imu <= t);
@@ -381,7 +355,6 @@ int main(int argc, char **argv)
 //      // add the image to the frontend for (blocking) processing
       if (t - start > deltaT) {
         okvis_estimator.addImage(t, i, filtered);
-//        std::cout << "t: " << t << std::endl;
       }
 
       cam_iterators[i]++;
