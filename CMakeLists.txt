@@ -342,6 +342,31 @@ if(BUILD_APPS)
     # IMPORTANT: Add the executable to the "export-set"
     EXPORT okvisTargets
     RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin)
+
+
+  add_executable(okvis_kaist_app_synchronous okvis_apps/src/okvis_kaist_app_synchronous.cpp)
+  target_link_libraries(okvis_kaist_app_synchronous
+          okvis_util
+          okvis_kinematics
+          okvis_time
+          okvis_cv
+          okvis_common
+          okvis_ceres
+          okvis_timing
+          okvis_matcher
+          okvis_frontend
+          okvis_multisensor_processing
+          pthread
+          ${Boost_LIBRARIES}
+          )
+  if(${VISENSORDRIVER_FOUND})
+    target_link_libraries(okvis_kaist_app_synchronous ${VISensorDriver_LIBRARY})
+  endif()
+  install(TARGETS okvis_kaist_app_synchronous
+          # IMPORTANT: Add the executable to the "export-set"
+          EXPORT okvisTargets
+          RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin)
+
 endif()
 
 # installation is invoked in the individual modules...
