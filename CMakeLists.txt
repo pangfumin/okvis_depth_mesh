@@ -12,7 +12,7 @@ set(OKVIS_VERSION
 option (USE_SYSTEM_BRISK
         "Use brisk via find_package rather than downloading it as part of okvis" ON) 
 option (USE_SYSTEM_CERES
-        "Use ceres via find_package rather than downloading it as part of okvis" ON) 
+        "Use ceres via find_package rather than downloading it as part of okvis" OFF)
 option (BUILD_APPS
         "Builds a demo app (which requires boost)" ON) 
 option (BUILD_TESTS
@@ -41,6 +41,7 @@ foreach(p LIB BIN INCLUDE CMAKE)
 endforeach()
 
 # make sure we use Release and warn otherwise
+set(CMAKE_BUILD_TYPE  Release)
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Release' as none was specified.")
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
@@ -145,11 +146,12 @@ if(${USE_SYSTEM_CERES})
   include_directories(BEFORE ${CERES_INCLUDE_DIRS})
   message(STATUS "Using system Ceres.")
 else()
-  set(CERES_VERSION 1.9.0)
-  set(CERES_TAG 7c57de5080c9f5a4f067e2d20b5f33bad5b1ade6) #version 1.9. Newer ones would need adaptation with ceres::ParameterBlock
+#  set(CERES_VERSION 1.9.0)
+#  set(CERES_TAG 7c57de5080c9f5a4f067e2d20b5f33bad5b1ade6) #version 1.9. Newer ones would need adaptation with ceres::ParameterBlock
   ExternalProject_Add(ceres_external
-    GIT_REPOSITORY https://ceres-solver.googlesource.com/ceres-solver
-    GIT_TAG ${CERES_TAG}
+#    GIT_REPOSITORY https://ceres-solver.googlesource.com/ceres-solver
+#    GIT_TAG ${CERES_TAG}
+    URL file://${CMAKE_SOURCE_DIR}/ceres-solver.zip
     UPDATE_COMMAND ""
     INSTALL_DIR ${CMAKE_BINARY_DIR}
     PATCH_COMMAND patch internal/ceres/schur_eliminator.h < ${CMAKE_CURRENT_SOURCE_DIR}/ceres.patch

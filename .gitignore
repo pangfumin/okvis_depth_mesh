@@ -31,3 +31,6 @@
 documentation/html/
 .vscode/
 build/
+.idea/
+cmake-build-debug/
+
